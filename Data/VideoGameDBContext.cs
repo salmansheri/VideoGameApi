@@ -7,9 +7,9 @@ public class VideoGameDBContext(DbContextOptions<VideoGameDBContext> options): D
 {
     public DbSet<VideoGame> VideoGames   => Set<VideoGame>();
     public DbSet<VideoGameDetails> VideoGameDetails => Set<VideoGameDetails>();
-    // public DbSet<Developer> Developers => Set<Developer>(); 
-    // public DbSet<Publisher> Publishers => Set<Publisher>();
-
+    public DbSet<Developer> Developers => Set<Developer>(); 
+    public DbSet<Publisher> Publishers => Set<Publisher>();
+    public DbSet<Genre> Genres => Set<Genre>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using VideoGameApi.Data;
@@ -11,9 +12,11 @@ using VideoGameApi.Data;
 namespace VideoGameApi.Migrations
 {
     [DbContext(typeof(VideoGameDBContext))]
-    partial class VideoGameDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250215141142_Genre_Model")]
+    partial class Genre_Model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +71,7 @@ namespace VideoGameApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("VideoGameApi.Models.Publisher", b =>

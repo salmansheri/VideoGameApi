@@ -8,7 +8,7 @@ namespace VideoGameApi.Models
         public string? Description { get;set;}
         public DateTime ReleaseDate { get; set; }
         public int VideoGameId { get; set; }
-        [ForeignKey("VideoGameId")]
+        
         public VideoGame? VideoGame { get; set; }
     }
 }
