@@ -12,8 +12,8 @@ using VideoGameApi.Data;
 namespace VideoGameApi.Migrations
 {
     [DbContext(typeof(VideoGameDBContext))]
-    [Migration("20250212110945_Initial_create")]
-    partial class Initial_create
+    [Migration("20250215133645_AddVideoGameDetails")]
+    partial class AddVideoGameDetails
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,38 +25,6 @@ namespace VideoGameApi.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("VideoGameApi.Models.Developer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Developers");
-                });
-
-            modelBuilder.Entity("VideoGameApi.Models.Publisher", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Publishers");
-                });
-
             modelBuilder.Entity("VideoGameApi.Models.VideoGame", b =>
                 {
                     b.Property<int>("Id")
@@ -65,28 +33,19 @@ namespace VideoGameApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("DeveloperId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Developer")
+                        .HasColumnType("text");
 
                     b.Property<string>("Platform")
                         .HasColumnType("text");
 
-                    b.Property<int?>("PublisherId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Publisher")
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.Property<int?>("VideoGameDetailsId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("DeveloperId");
-
-                    b.HasIndex("PublisherId");
-
-                    b.HasIndex("VideoGameDetailsId");
 
                     b.ToTable("VideoGames");
 
@@ -164,35 +123,33 @@ namespace VideoGameApi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ReleaseData")
+                    b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("VidoeGameId")
+                    b.Property<int>("VideoGameId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("VideoGameId")
+                        .IsUnique();
+
                     b.ToTable("VideoGameDetails");
+                });
+
+            modelBuilder.Entity("VideoGameApi.Models.VideoGameDetails", b =>
+                {
+                    b.HasOne("VideoGameApi.Models.VideoGame", "VideoGame")
+                        .WithOne("VideoGameDetails")
+                        .HasForeignKey("VideoGameApi.Models.VideoGameDetails", "VideoGameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("VideoGame");
                 });
 
             modelBuilder.Entity("VideoGameApi.Models.VideoGame", b =>
                 {
-                    b.HasOne("VideoGameApi.Models.Developer", "Developer")
-                        .WithMany()
-                        .HasForeignKey("DeveloperId");
-
-                    b.HasOne("VideoGameApi.Models.Publisher", "Publisher")
-                        .WithMany()
-                        .HasForeignKey("PublisherId");
-
-                    b.HasOne("VideoGameApi.Models.VideoGameDetails", "VideoGameDetails")
-                        .WithMany()
-                        .HasForeignKey("VideoGameDetailsId");
-
-                    b.Navigation("Developer");
-
-                    b.Navigation("Publisher");
-
                     b.Navigation("VideoGameDetails");
                 });
 #pragma warning restore 612, 618

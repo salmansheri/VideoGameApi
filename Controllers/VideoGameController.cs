@@ -15,7 +15,7 @@ namespace VideoGameApi.Controllers
         public async Task<ActionResult<List<VideoGame>>> GetVideoGames()
         {
             return Ok(await _context.VideoGames
-                .Include(g => g.VideoGameDetails)
+            .Include(vg => vg.VideoGameDetails)                
             .ToListAsync());
         }
 

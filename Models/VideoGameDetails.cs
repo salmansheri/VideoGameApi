@@ -1,9 +1,14 @@
-namespace VideoGameApi.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class VideoGameDetails
+namespace VideoGameApi.Models
 {
-    public int Id { get; set; }
-    public string? Description { get; set; }
-    public DateTime ReleaseData { get; set; }
-    public int VidoeGameId { get; set; }
+    public class VideoGameDetails
+    {
+        public int Id { get;set; }
+        public string? Description { get;set;}
+        public DateTime ReleaseDate { get; set; }
+        public int VideoGameId { get; set; }
+        [ForeignKey("VideoGameId")]
+        public VideoGame? VideoGame { get; set; }
+    }
 }

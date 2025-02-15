@@ -7,8 +7,8 @@ public class VideoGameDBContext(DbContextOptions<VideoGameDBContext> options): D
 {
     public DbSet<VideoGame> VideoGames   => Set<VideoGame>();
     public DbSet<VideoGameDetails> VideoGameDetails => Set<VideoGameDetails>();
-    public DbSet<Developer> Developers => Set<Developer>(); 
-    public DbSet<Publisher> Publishers => Set<Publisher>();
+    // public DbSet<Developer> Developers => Set<Developer>(); 
+    // public DbSet<Publisher> Publishers => Set<Publisher>();
 
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -85,7 +85,7 @@ public class VideoGameDBContext(DbContextOptions<VideoGameDBContext> options): D
         Platform = "PC, PS5, Xbox Series X, PS4, Xbox One",
        
     }           
-        );
+ ); 
     }
 
 }
