@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using VideoGameApi.Entities;
 using VideoGameApi.Models;
 
 namespace VideoGameApi.Data;
@@ -10,6 +11,7 @@ public class VideoGameDBContext(DbContextOptions<VideoGameDBContext> options): D
     public DbSet<Developer> Developers => Set<Developer>(); 
     public DbSet<Publisher> Publishers => Set<Publisher>();
     public DbSet<Genre> Genres => Set<Genre>();
+    public DbSet<User> User => Set<User>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

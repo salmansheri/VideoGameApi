@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using VideoGameApi.Data;
 using VideoGameApi.Models;
+
+
 
 namespace VideoGameApi.Controllers
 {
@@ -44,6 +47,7 @@ namespace VideoGameApi.Controllers
 
 
             return CreatedAtAction(nameof(GetVideoGameById), new { id = newGame.Id }, newGame);
+            
 
 
         }
