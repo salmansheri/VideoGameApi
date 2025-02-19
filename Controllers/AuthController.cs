@@ -41,6 +41,7 @@ namespace VideoGameApi.Controllers
         [HttpGet]
         public IActionResult AuthenticatedOnlyEndPoint()
         {
+            var someting = "";
             return Ok("You are authenticated");
 
         }
