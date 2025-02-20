@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,7 @@ namespace VideoGameApi.Services
 
             user.Username = request.Username;
             user.PasswordHash = hashedPassword; 
+            user.Role = request.Role; 
 
             context.User.Add(user); 
 
@@ -58,7 +60,8 @@ namespace VideoGameApi.Services
             var claim = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.Role)
             }; 
 
             var key = new SymmetricSecurityKey(
@@ -75,6 +78,27 @@ namespace VideoGameApi.Services
             ); 
 
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor); 
+
+        }
+
+        private string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+
+            rng.GetBytes(randomNumber); 
+
+            return Convert.ToBase64String(randomNumber);
+        }
+
+        private async Task<string> GenerateRefreshTokenAsync(User user)
+        {
+            var refreshToken = GenerateRefreshToken(); 
+            user.RefreshToken = refreshToken; 
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+            await context.SaveChangesAsync(); 
+            return refreshToken; 
+
 
         }
 

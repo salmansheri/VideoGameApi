@@ -47,6 +47,18 @@ namespace VideoGameApi.Controllers
         }
 
         
+        [Authorize(Roles = "Admin")]
+        [HttpGet("admin-only")]
+        public IActionResult AdminOnlyEndPoint()
+        {
+        
+            return Ok("You are authenticated");
+
+        }
+
+        
+
+        
 
     }
     
