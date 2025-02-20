@@ -28,12 +28,12 @@ namespace VideoGameApi.Controllers
         }
 
         [HttpPost("Login")]
-        public async  Task<ActionResult<string>> Login(UserDTO request)
+        public async  Task<ActionResult<TokenResponseDTO>> Login(UserDTO request)
         {
-           var token = await authService.LoginAsync(request); 
-           if (token is null) return BadRequest("Invalid Username or Password"); 
+           var result = await authService.LoginAsync(request); 
+           if (result is null) return BadRequest("Invalid Username or Password"); 
 
-           return Ok(token);
+           return Ok(result);
 
         }
 
@@ -53,6 +53,20 @@ namespace VideoGameApi.Controllers
         {
         
             return Ok("You are authenticated");
+
+        }
+
+
+        [HttpPost("refresh-tokens")]
+        public async Task<ActionResult<TokenResponseDTO>> RefreshToken(RefreshTokenRequestDTO request)
+        {
+            var result = await authService.RefreshTokensAsync(request);
+
+            if(result is null || result.AccessToken == null || result.RefreshToken is null) {
+                return Unauthorized("Invalid refresh token");
+            }
+
+            return Ok(result);
 
         }
 
